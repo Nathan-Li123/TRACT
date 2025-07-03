@@ -6,7 +6,7 @@ International Conference on Computer Vision (ICCV), 2025. (*equal advising and c
 
 ## Attention to Trajectory!
 ---
-![intro](./assets/Fig-Intro.pdf)![comp](./assets/Fig-Comp.pdf) <br>
+![intro](./assets/introduction.png)![comp](./assets/compare.png) <br>
 **Figure**: Illustration of the proposed Semantic **SMOT**. Existing multi-object tracking (MOT) focusing on predicting trajectories only (see (a)) and our semantic multi-object tracking (SMOT) aiming at estimating trajectories and understanding their semantics (see (b)). Best viewed in color for all figures.
 
 ## Framework
