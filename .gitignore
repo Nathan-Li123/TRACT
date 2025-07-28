@@ -1,0 +1,199 @@
+# TRACT Project .gitignore
+# Comprehensive gitignore for Python, Machine Learning, and Multi-modal projects
+
+# =======================================
+# Python
+# =======================================
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# PyInstaller
+*.manifest
+*.spec
+
+# Python Virtual Environments
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+.venv/
+
+# =======================================
+# Machine Learning & Deep Learning
+
+# Scalabel specific
+scalabel/
+scalabel_data/
+scalabel_output/
+scalabel_logs/
+# =======================================
+# Model files and weights
+*.pth
+*.ckpt
+*.h5
+*.pkl
+*.pickle
+*.model
+*.weights
+saved_models/
+checkpoints/
+models/
+pretrained/
+bert-base-uncased/
+
+# Training outputs and results
+results/
+outputs/
+logs/
+runs/
+work_dirs/
+wandb/
+mlruns/
+
+# Data directories
+data/
+datasets/
+local-data/
+test_data/
+
+# Cache directories
+.cache/
+.mypy_cache/
+.pytest_cache/
+.pytype/
+
+# =======================================
+# IDE and Editor
+# =======================================
+# VS Code
+.vscode/
+.vscode/sftp.json
+
+# IntelliJ IDEA
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# Vim
+*.swp
+*.swo
+*~
+
+# Emacs
+*~
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+*.elc
+auto-save-list
+tramp
+.\#*
+
+# =======================================
+# Operating System
+# =======================================
+# macOS
+*.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msm
+*.msp
+*.lnk
+
+# Linux
+*~
+.directory
+.Trash-*
+
+# =======================================
+# Node.js (for web components)
+# =======================================
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.npm
+.eslintcache
+coverage/
+flow-typed/
+
+# =======================================
+# Build artifacts
+# =======================================
+bin/
+app/dist/
+*.rdb
+
+# =======================================
+# Jupyter Notebooks
+# =======================================
+.ipynb_checkpoints/
+*/.ipynb_checkpoints/*
+
+# =======================================
+# Environment files
+# =======================================
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# =======================================
+# Temporary files
+# =======================================
+*.tmp
+*.temp
+*.log
+*.bak
+*.backup
+
+# =======================================
+# Project specific
+# =======================================
+# MASA specific
+masa/results/
+masa/data/
+masa/saved_models/
+masa/bert-base-uncased/
+masa/work_dirs/
+
+# TraCLIP specific
+TraCLIP/outputs/
+TraCLIP/datasets/
+
+# Downloaded models and external repos
+*/experimental/*

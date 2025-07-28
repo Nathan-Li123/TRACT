@@ -1,81 +1,138 @@
-# Attention to Trajectory: Trajectory-Aware Open-Vocabulary Tracking
-Attention to Trajectory: Trajectory-Aware Open-Vocabulary Tracking <br>
+# TRACT: Trajectory-Aware Open-Vocabulary Tracking
+
+**Attention to Trajectory: Trajectory-Aware Open-Vocabulary Tracking**
+
 Yunhao Li, Yifan Jiao, Dan Meng, Heng Fan*, Libo Zhang* <br>
-International Conference on Computer Vision (ICCV), 2025. (*equal advising and co-last author)<br>
-[`arXiv`](https://arxiv.org/abs/2503.08145) 
+International Conference on Computer Vision (ICCV), 2025. (*equal advising and co-last author)
 
-## Attention to Trajectory!
----
-![intro](./assets/introduction.png)![comp](./assets/compare.png) <br>
-**Figure**: Illustration of the proposed Semantic **SMOT**. Existing multi-object tracking (MOT) focusing on predicting trajectories only (see (a)) and our semantic multi-object tracking (SMOT) aiming at estimating trajectories and understanding their semantics (see (b)). Best viewed in color for all figures.
+[![arXiv](https://img.shields.io/badge/arXiv-2503.08145-b31b1b.svg)](https://arxiv.org/abs/2503.08145)
+[![Project Page](https://img.shields.io/badge/Project-Page-green.svg)](#)
 
-## Framework
----
-![framework](assets/framework.jpg) <br>
-**Figure**: : Illustration of the proposed approach **SMOTer**, which contains three components of trajectory estimation for tracking, feature fusion, and trajectory-associated semantic understanding.
+## 🎯 Overview
 
-## Implementation
----
-### Installation
-##### Requirements
-- Linux or macOS with python >= 3.8
-- Pytorch >= 1.10.0: this configuration is suitable for our V100 server, and theoretically, the PyTorch version only needs to be higher than 1.8.0.
-- Detectron2: follow its [official instructions](https://detectron2.readthedocs.io/en/latest/tutorials/install.html).
-##### Installation Example
-```shell
-conda create -n somter python=3.8.0
-conda activate somter
-pip install torch==1.10.0+cu111 torchvision==0.11.0+cu111 torchaudio==0.10.0 -f https://download.pytorch.org/whl/torch_stable.html
+<p float="left">
+  <img src="./assets/introduction.png" width="51%" />
+  <img src="./assets/compare.png" width="46%" />
+</p>
 
-# under your working directory
-git clone https://github.com/facebookresearch/detectron2.git
-cd detectron2
-pip install -e .
+Despite recent progress, current Open-Vocabulary Multi-Object Tracking (OV-MOT) methods largely focus on instance-level information while overlooking trajectory-level cues. Although some introduce novel association strategies, they neglect trajectory information—an essential component in videos and a staple in classic MOT. This limits their ability to exploit contextual continuity. 
 
-cd ..
-# or git clone https://github.com/Nathan-Li123/SMOTer
-git clone https://github.com/HengLan/SMOT
-# or cd SMOTer
-cd SMOT 
+In contrast, our **TRACT** framework incorporates trajectory-level cues through three key strategies:
+- **TCR (Trajectory Consistency Reinforcement)**: Enforces consistency within trajectories
+- **TFA (Trajectory-aware Feature Aggregation)**: Aggregates features across trajectory history  
+- **TSE (Trajectory Semantic Enhancement)**: Enhances semantic understanding using trajectory context
+
+## 🏗️ Architecture
+
+![framework](assets/architecture.png)
+
+**TRACT Framework Overview**: Our approach uses a replaceable open-vocabulary detector to generate boxes of arbitrary categories. These detection results are used for trajectory association, where TRACT leverages trajectory information in both the trajectory-enhanced association and trajectory-assisted classification steps.
+
+## 🚀 Key Features
+
+- **Universal Open-Vocabulary Tracking**: Track any object categories without specific training
+- **Trajectory-Aware Design**: Incorporates temporal consistency and trajectory-level reasoning
+- **Strong Performance**: Achieves state-of-the-art results on multiple benchmarks
+
+## 📦 Project Structure
+
+This repository contains two main components:
+
+### 1. Trajectory-aware MASA (Matching Anything by Segmenting Anything)
+- **Location**: `./masa/`
+- **Purpose**: Universal instance appearance model for object association
+- **Features**: Zero-shot tracking capabilities across diverse domains
+
+### 2. TraCLIP (Trajectory-aware CLIP)
+- **Location**: `./TraCLIP/`
+- **Purpose**: Trajectory-aware classification using CLIP features
+- **Features**: Temporal feature aggregation and trajectory semantic enhancement
+
+## ⚙️ Installation
+
+### Prerequisites
+- Linux or macOS
+- Python >= 3.9
+- PyTorch >= 2.1.2
+- CUDA >= 11.8 (recommended)
+
+### Step 1: Clone Repository
+```bash
+git clone https://github.com/your-repo/TRACT.git
+cd TRACT
+```
+
+### Step 2: Install MASA Dependencies
+```bash
+cd masa
+conda env create -f environment.yml
+conda activate masaenv
+
+# Option 1: Automated installation
+sh install_dependencies.sh
+
+# Option 2: Manual installation
+pip install -U openmim
+mim install mmengine
+pip install mmcv==2.1.0 -f https://download.openmmlab.com/mmcv/dist/cu118/torch2.1/index.html
+pip install git+https://github.com/open-mmlab/mmdetection.git@v3.3.0
 pip install -r requirements.txt
 ```
-### Dataset preparation
-1. Before starting the processing, please download BenSMOT from here ([baidu: yb2d](https://pan.baidu.com/s/1tw4Jw6y1426lTy8noOanjg), [one dirve](https://mailsucasaccn-my.sharepoint.com/:f:/g/personal/liyunhao23_mails_ucas_ac_cn/Et6ORndJAJZIic2rIzA3VjYBgNwW58TUnsxVB61s9taJcg?e=FpLhAp)) and place it anywhere you wish to. For more details about BenSMOT, please refer to [BenSMOT.md](BenSMOT.md). 
-2. In the BenSMOT dataset folder, we provide semantic annotation files for each sequence in the dataset, including video captions, trajectory captions, and trajectory interactions. For convenience, we recommend downloading the combined annotation files from here ([baidu: 1b2h](https://pan.baidu.com/s/1-Moxeg8NrJqwfcv-rrS2bQ), [one drive](https://mailsucasaccn-my.sharepoint.com/:f:/g/personal/liyunhao23_mails_ucas_ac_cn/Evvg_GpNM7pBkfwe7fHaxFUBaLK1xxFFwmn8T5Pp86TPlA?e=CBa3xb)).
-3. Sim-link the test set of BenSMOT to `datasets/bensmot/BenSMOT-val/`, and construct them as follows.
-```text
-datasets
-├── bensmot
-|   └──annotations
-|   └──seqmaps
-|   └──BenSMOT-val
-|   └──instance_captioin.json
-|   └──video_summary.json
-|   └──relation.json
-```
-4. Modify the `DATA_PATH` in `tools/convert_bensmot2coco.py` to the BenSMOT root directory you are using.
-5. run `tools/convert_bensmot2coco.py` to create `train.json` and `test.json` files in the `annotations` folder, and create a `test.txt` file in the `seqmaps` folder. 
 
-### Training and Evaluation
-Please use the scripts provided in `scripts/bensmot.sh` for training and evaluation. The weights files used in the process can be downloaded here ([one drive](https://mailsucasaccn-my.sharepoint.com/:f:/g/personal/liyunhao23_mails_ucas_ac_cn/EhcMubyTKB1OqNchDySUtQABL9fbALawt3KVbYNpd9GLnA?e=HwhU3S)). 
-```shell
-# train
-CUDA_VISIBLE_DEVICES=0,1,2,3 python train_net.py --num-gpus 4 --config-file configs/BYTE_BENSMOT_FPN.yaml
-# evaluation
-CUDA_VISIBLE_DEVICES=0 python train_net.py --num-gpus 1 --config-file configs/BYTE_BENSMOT_FPN.yaml --eval-only path/to/weight
-# count metrics
-python eval_vu.py
-```
-### Acknowledgement
-Our code repository is built upon [xingyizhou/GTR](https://github.com/xingyizhou/GTR). Thanks for their wonderful work.
+### Step 3: Install TraCLIP Dependencies
+```bash
+cd ../TraCLIP
+pip install -r requirements.txt
 
-### Citation
-If you find this project useful for your research, please use the following BibTeX entry.
-```text
-@inproceedings{li2024beyond,
-  title={Beyond MOT: Semantic Multi-Object Tracking},
-  author={Li, Yunhao and Li, Qin and Wang, Hao and Ma, Xue and Yao, Jiali and Dong, Shaohua and Fan, Heng and Zhang, Libo},
-  booktitle={ECCV},
-  year={2024}
+# Install additional packages
+pip install clip-by-openai
+pip install timm
+pip install tqdm
+```
+
+### Step 4: Download Pre-trained Models
+Download the model weights from [OneDrive](https://mailsucasaccn-my.sharepoint.com/:f:/g/personal/liyunhao23_mails_ucas_ac_cn/EhcMubyTKB1OqNchDySUtQABL9fbALawt3KVbYNpd9GLnA?e=HwhU3S) and place them in the appropriate directories:
+- MASA models: `./masa/saved_models/masa_models/`
+- TraCLIP models: `./TraCLIP/outputs/`
+
+## 🔧 Usage
+
+## 📁 Data Preparation
+
+### TAO Dataset
+1. Download TAO dataset from [official website](https://taodataset.org/)
+2. Organize the data structure as shown in `TraCLIP/datasets/`
+3. Generate tracklet datasets using provided scripts
+
+### Custom Dataset
+Follow the data format specifications in `TraCLIP/readme.md` for custom datasets.
+
+## 🛠️ Troubleshooting
+
+### Common Issues
+
+1. **CUDA out of memory**: Reduce batch size or use gradient accumulation
+2. **Missing dependencies**: Ensure all packages in requirements.txt are installed
+3. **Model loading errors**: Check model paths and download pre-trained weights
+
+## 🙏 Acknowledgements
+
+Our code repository is built upon:
+- [MASA](https://github.com/siyuanliii/masa) - Universal instance appearance modeling
+- [MMDetection](https://github.com/open-mmlab/mmdetection) - Object detection framework
+- [CLIP](https://github.com/openai/CLIP) - Vision-language pre-training
+
+Thanks for their wonderful work!
+
+## 📖 Citation
+
+If you find this project useful for your research, please use the following BibTeX entry:
+
+```bibtex
+@inproceedings{li2025tract,
+  title={Attention to Trajectory: Trajectory-Aware Open-Vocabulary Tracking},
+  author={Li, Yunhao and Jiao, Yifan and Meng, Dan and Fan, Heng and Zhang, Libo},
+  booktitle={International Conference on Computer Vision (ICCV)},
+  year={2025}
 }
 ```

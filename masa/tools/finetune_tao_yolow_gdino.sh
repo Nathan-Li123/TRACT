@@ -1,0 +1,1 @@
+tools/dist_test.sh configs/masa-gdino/tao_teta_test/masa_gdino_swinb_tao_test_yolow_dets.py saved_models/masa_models/gdino_masa.pth 4
