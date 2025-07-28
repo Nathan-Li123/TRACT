@@ -90,11 +90,6 @@ pip install timm
 pip install tqdm
 ```
 
-### Step 4: Download Pre-trained Models
-Download the model weights from [OneDrive](https://mailsucasaccn-my.sharepoint.com/:f:/g/personal/liyunhao23_mails_ucas_ac_cn/EhcMubyTKB1OqNchDySUtQABL9fbALawt3KVbYNpd9GLnA?e=HwhU3S) and place them in the appropriate directories:
-- MASA models: `./masa/saved_models/masa_models/`
-- TraCLIP models: `./TraCLIP/outputs/`
-
 ## 🔧 Usage
 
 ## 📁 Data Preparation
