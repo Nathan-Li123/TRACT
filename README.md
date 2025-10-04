@@ -1,6 +1,4 @@
-# TRACT: Trajectory-Aware Open-Vocabulary Tracking
-
-**Attention to Trajectory: Trajectory-Aware Open-Vocabulary Tracking**
+# Attention to Trajectory: Trajectory-Aware Open-Vocabulary Tracking**
 
 Yunhao Li, Yifan Jiao, Dan Meng, Heng Fan*, Libo Zhang* <br>
 International Conference on Computer Vision (ICCV), 2025. (*equal advising and co-last author)
